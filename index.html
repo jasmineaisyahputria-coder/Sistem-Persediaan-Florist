@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Florist Inventory System</title>
+
+    <!-- Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="flower-logo">
+            🌷
+        </div>
+
+        <div>
+            <h1>Florist</h1>
+            <span>Inventory System</span>
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <button class="menu-item active"
+                onclick="showPage('dashboard')">
+
+            <span>🏠</span>
+            Dashboard
+
+        </button>
+
+
+        <button class="menu-item"
+                onclick="showPage('produk')">
+
+            <span>🌸</span>
+            Produk
+
+        </button>
+
+
+        <button class="menu-item"
+                onclick="showPage('supplier')">
+
+            <span>🌿</span>
+            Supplier
+
+        </button>
+
+
+        <button class="menu-item"
+                onclick="showPage('transaksi')">
+
+            <span>🧾</span>
+            Transaksi
+
+        </button>
+
+
+        <button class="menu-item"
+                onclick="showPage('laporan')">
+
+            <span>📊</span>
+            Laporan
+
+        </button>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <p>
+            Sistem Persediaan
+        </p>
+
+        <small>
+            Florist Store
+        </small>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard"
+         class="page active-page">
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="small-title">
+                FLORIST INVENTORY
+            </p>
+
+            <h2>
+                Selamat Datang 🌷
+            </h2>
+
+            <p>
+                Kelola persediaan toko florist dengan mudah.
+            </p>
+
+        </div>
+
+    </div>
+
+
+     <p id="databaseStatus"
+         class="connection-status"
+         role="status"
+         hidden></p>
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card pink">
+
+            <div class="stat-icon">
+                🌸
+            </div>
+
+            <div>
+
+                <span>
+                    Total Produk
+                </span>
+
+                <h3 id="totalProduk">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <div class="stat-icon">
+                🌿
+            </div>
+
+            <div>
+
+                <span>
+                    Total Supplier
+                </span>
+
+                <h3 id="totalSupplier">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card peach">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <div>
+
+                <span>
+                    Total Stok
+                </span>
+
+                <h3 id="totalStok">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card lavender">
+
+            <div class="stat-icon">
+                🧾
+            </div>
+
+            <div>
+
+                <span>
+                    Transaksi
+                </span>
+
+                <h3 id="totalTransaksi">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+
+        <div class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Produk Terbaru
+                    </h3>
+
+                    <p>
+                        Data persediaan florist
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Produk
+                            </th>
+
+                            <th>
+                                Kategori
+                            </th>
+
+                            <th>
+                                Stok
+                            </th>
+
+                            <th>
+                                Harga
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="dashboardProduk">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Stok Rendah
+                    </h3>
+
+                    <p>
+                        Perlu diperhatikan
+                    </p>
+
+                </div>
+
+                <span class="warning-icon">
+                    ⚠️
+                </span>
+
+            </div>
+
+
+            <div id="stokRendah"
+                 class="low-stock-list">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PRODUK
+===================================================== -->
+
+<section id="produk"
+         class="page">
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="small-title">
+                MASTER DATA
+            </p>
+
+            <h2>
+                Data Produk 🌸
+            </h2>
+
+            <p>
+                Kelola produk persediaan florist.
+            </p>
+
+        </div>
+
+        <button class="btn-primary"
+                onclick="openProdukModal()">
+
+            + Tambah Produk
+
+        </button>
+
+    </div>
+
+
+    <div class="content-card">
+
+
+        <div class="toolbar">
+
+            <input type="text"
+                   id="searchProduk"
+                   placeholder="🔎 Cari produk..."
+                   onkeyup="loadProduk()">
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            Produk
+                        </th>
+
+                        <th>
+                            Kategori
+                        </th>
+
+                        <th>
+                            Satuan
+                        </th>
+
+                        <th>
+                            Harga Beli
+                        </th>
+
+                        <th>
+                            Harga Jual
+                        </th>
+
+                        <th>
+                            Stok
+                        </th>
+
+                        <th>
+                            Aksi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="produkTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SUPPLIER
+===================================================== -->
+
+<section id="supplier"
+         class="page">
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="small-title">
+                MASTER DATA
+            </p>
+
+            <h2>
+                Data Supplier 🌿
+            </h2>
+
+            <p>
+                Kelola pemasok bunga dan perlengkapan.
+            </p>
+
+        </div>
+
+        <button class="btn-primary"
+                onclick="openSupplierModal()">
+
+            + Tambah Supplier
+
+        </button>
+
+    </div>
+
+
+    <div class="content-card">
+
+
+        <div class="toolbar">
+
+            <input type="text"
+                   id="searchSupplier"
+                   placeholder="🔎 Cari supplier..."
+                   onkeyup="loadSupplier()">
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            Nama Supplier
+                        </th>
+
+                        <th>
+                            Telepon
+                        </th>
+
+                        <th>
+                            Alamat
+                        </th>
+
+                        <th>
+                            Aksi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="supplierTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TRANSAKSI
+===================================================== -->
+
+<section id="transaksi"
+         class="page">
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="small-title">
+                TRANSAKSI PERSEDIAAN
+            </p>
+
+            <h2>
+                Transaksi 🧾
+            </h2>
+
+            <p>
+                Catat barang masuk dan barang keluar.
+            </p>
+
+        </div>
+
+        <button class="btn-primary"
+                onclick="openTransaksiModal()">
+
+            + Tambah Transaksi
+
+        </button>
+
+    </div>
+
+
+    <div class="content-card">
+
+
+        <div class="toolbar">
+
+            <input type="text"
+                   id="searchTransaksi"
+                   placeholder="🔎 Cari nomor transaksi..."
+                   onkeyup="loadTransaksi()">
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            Nomor
+                        </th>
+
+                        <th>
+                            Tanggal
+                        </th>
+
+                        <th>
+                            Jenis
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Keterangan
+                        </th>
+
+                        <th>
+                            Aksi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="transaksiTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LAPORAN
+===================================================== -->
+
+<section id="laporan"
+         class="page">
+
+    <div class="page-header">
+
+        <div>
+
+            <p class="small-title">
+                LAPORAN
+            </p>
+
+            <h2>
+                Laporan Persediaan 📊
+            </h2>
+
+            <p>
+                Informasi nilai persediaan saat ini.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="content-card">
+
+
+        <div class="report-summary">
+
+            <div>
+
+                <span>
+                    Total Nilai Persediaan
+                </span>
+
+                <strong id="nilaiPersediaan">
+                    Rp0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            Produk
+                        </th>
+
+                        <th>
+                            Kategori
+                        </th>
+
+                        <th>
+                            Stok
+                        </th>
+
+                        <th>
+                            Harga Beli
+                        </th>
+
+                        <th>
+                            Nilai Persediaan
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="laporanTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     MODAL PRODUK
+===================================================== -->
+
+<div id="produkModal"
+     class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <p class="small-title">
+                    DATA PRODUK
+                </p>
+
+                <h3 id="produkModalTitle">
+                    Tambah Produk
+                </h3>
+
+            </div>
+
+            <button class="close-btn"
+                    onclick="closeModal('produkModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="produkForm"
+              onsubmit="saveProduk(event)">
+
+            <input type="hidden"
+                   id="produkId">
+
+
+            <label>
+                Nama Produk
+            </label>
+
+            <input type="text"
+                   id="namaProduk"
+                   required>
+
+
+            <label>
+                Kategori
+            </label>
+
+            <select id="kategoriProduk"
+                    required>
+
+                <option value="">
+                    Pilih kategori
+                </option>
+
+                <option value="Bunga Potong">
+                    Bunga Potong
+                </option>
+
+                <option value="Aksesoris">
+                    Aksesoris
+                </option>
+
+                <option value="Kemasan">
+                    Kemasan
+                </option>
+
+                <option value="Tanaman">
+                    Tanaman
+                </option>
+
+            </select>
+
+
+            <label>
+                Satuan
+            </label>
+
+            <select id="satuanProduk"
+                    required>
+
+                <option value="pcs">
+                    pcs
+                </option>
+
+                <option value="tangkai">
+                    tangkai
+                </option>
+
+                <option value="ikat">
+                    ikat
+                </option>
+
+                <option value="roll">
+                    roll
+                </option>
+
+                <option value="lembar">
+                    lembar
+                </option>
+
+            </select>
+
+
+            <label>
+                Supplier
+            </label>
+
+            <select id="supplierProduk">
+
+            </select>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>
+                        Harga Beli
+                    </label>
+
+                    <input type="number"
+                           id="hargaBeli"
+                           min="0"
+                           required>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Harga Jual
+                    </label>
+
+                    <input type="number"
+                           id="hargaJual"
+                           min="0"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>
+                        Stok
+                    </label>
+
+                    <input type="number"
+                           id="stokProduk"
+                           min="0"
+                           required>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Stok Minimum
+                    </label>
+
+                    <input type="number"
+                           id="stokMinimum"
+                           min="0"
+                           value="5"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button type="button"
+                        class="btn-secondary"
+                        onclick="closeModal('produkModal')">
+
+                    Batal
+
+                </button>
+
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Simpan
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL SUPPLIER
+===================================================== -->
+
+<div id="supplierModal"
+     class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <p class="small-title">
+                    DATA SUPPLIER
+                </p>
+
+                <h3 id="supplierModalTitle">
+                    Tambah Supplier
+                </h3>
+
+            </div>
+
+            <button class="close-btn"
+                    onclick="closeModal('supplierModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="supplierForm"
+              onsubmit="saveSupplier(event)">
+
+            <input type="hidden"
+                   id="supplierId">
+
+
+            <label>
+                Nama Supplier
+            </label>
+
+            <input type="text"
+                   id="namaSupplier"
+                   required>
+
+
+            <label>
+                Nomor Telepon
+            </label>
+
+            <input type="text"
+                   id="teleponSupplier">
+
+
+            <label>
+                Alamat
+            </label>
+
+            <textarea id="alamatSupplier"
+                      rows="3"></textarea>
+
+
+            <div class="modal-actions">
+
+                <button type="button"
+                        class="btn-secondary"
+                        onclick="closeModal('supplierModal')">
+
+                    Batal
+
+                </button>
+
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Simpan
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL TRANSAKSI
+===================================================== -->
+
+<div id="transaksiModal"
+     class="modal">
+
+    <div class="modal-content modal-large">
+
+        <div class="modal-header">
+
+            <div>
+
+                <p class="small-title">
+                    TRANSAKSI PERSEDIAAN
+                </p>
+
+                <h3>
+                    Tambah Transaksi
+                </h3>
+
+            </div>
+
+            <button class="close-btn"
+                    onclick="closeModal('transaksiModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form onsubmit="saveTransaksi(event)">
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>
+                        Jenis Transaksi
+                    </label>
+
+                    <select id="jenisTransaksi"
+                            required>
+
+                        <option value="MASUK">
+                            Barang Masuk
+                        </option>
+
+                        <option value="KELUAR">
+                            Barang Keluar
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Tanggal
+                    </label>
+
+                    <input type="date"
+                           id="tanggalTransaksi"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <label>
+                Produk
+            </label>
+
+            <select id="produkTransaksi"
+                    required>
+
+            </select>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>
+                        Jumlah
+                    </label>
+
+                    <input type="number"
+                           id="jumlahTransaksi"
+                           min="1"
+                           required>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Harga Satuan
+                    </label>
+
+                    <input type="number"
+                           id="hargaTransaksi"
+                           min="0"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <label>
+                Keterangan
+            </label>
+
+            <textarea id="keteranganTransaksi"
+                      rows="3"
+                      placeholder="Contoh: Pembelian stok bunga dari supplier..."></textarea>
+
+
+            <div class="transaction-preview">
+
+                <span>
+                    Total Transaksi
+                </span>
+
+                <strong id="totalTransaksiPreview">
+                    Rp0
+                </strong>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button type="button"
+                        class="btn-secondary"
+                        onclick="closeModal('transaksiModal')">
+
+                    Batal
+
+                </button>
+
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Simpan Transaksi
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- JavaScript -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
