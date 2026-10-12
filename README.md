@@ -13,6 +13,14 @@
 **FAKULTAS EKONOMIKA DAN BISNIS**  
 **UNIVERSITAS DIPONEGORO**
 
+---
+
+### 🌐 Live Demo
+
+## 👉 [**Klik di sini untuk membuka sistem**](https://jasmineaisyahputria-coder.github.io/Sistem-Persediaan-Florist/)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Buka%20Sistem-ffb6c1?style=for-the-badge&logo=github)](https://jasmineaisyahputria-coder.github.io/Sistem-Persediaan-Florist/)
+
 </div>
 
 ---
@@ -22,6 +30,8 @@
 **Sistem Persediaan Florist** adalah aplikasi web untuk membantu toko florist mengelola data produk dan supplier, mencatat barang masuk dan keluar, serta memantau jumlah dan nilai persediaan. Aplikasi menyediakan dashboard, pencarian data, dan peringatan produk dengan stok rendah.
 
 Frontend dibuat menggunakan HTML, CSS, dan JavaScript. Data disimpan di Supabase dengan PostgreSQL, dan aplikasi berkomunikasi dengan database melalui Supabase JavaScript Client.
+
+🔗 **Akses sistem:** [Buka Live Demo](https://jasmineaisyahputria-coder.github.io/Sistem-Persediaan-Florist/)
 
 ## ✨ Fitur Utama
 
@@ -42,6 +52,7 @@ Frontend dibuat menggunakan HTML, CSS, dan JavaScript. Data disimpan di Supabase
 | Frontend | HTML5, CSS3, JavaScript (Vanilla) |
 | Database | Supabase / PostgreSQL |
 | Client library | Supabase JavaScript Client v2 melalui jsDelivr CDN |
+| Hosting | GitHub Pages |
 | Tipografi | Times New Roman; Playfair Display dimuat dari Google Fonts |
 
 ## 🗂️ Struktur Database
@@ -107,6 +118,10 @@ sistem-persediaan-florist/
 
 ## 🚀 Cara Menjalankan
 
+### 🌐 Akses Online
+
+Sistem dapat dibuka langsung melalui GitHub Pages: [**Klik di sini untuk membuka sistem**](https://jasmineaisyahputria-coder.github.io/Sistem-Persediaan-Florist/).
+
 ### 1. Siapkan database Supabase
 
 1. Buat project di [Supabase](https://supabase.com).
@@ -148,6 +163,7 @@ SQL mengaktifkan Row Level Security (RLS), tetapi kebijakan yang disertakan memb
 | **Program Studi** | S1 Akuntansi |
 | **Fakultas** | Ekonomika dan Bisnis |
 | **Universitas** | Universitas Diponegoro |
+| **GitHub** | [@jasmineaisyahputria-coder](https://github.com/jasmineaisyahputria-coder) |
 
 ---
 
@@ -156,6 +172,8 @@ SQL mengaktifkan Row Level Security (RLS), tetapi kebijakan yang disertakan memb
 ### 🌷 Terima Kasih 🌷
 
 *Sistem Persediaan Florist — Solusi Digital untuk Toko Bunga Modern*
+
+## 👉 [**Klik di sini untuk membuka sistem**](https://jasmineaisyahputria-coder.github.io/Sistem-Persediaan-Florist/)
 
 **© 2025 Jasmine Aisyah Putria — Universitas Diponegoro**
 
